@@ -35,13 +35,31 @@
   "@failureLabel": {
     "description": "The text displayed denoting an unsuccessful launch"
   },
-  "flightNumberText": "Flight number: {count}",
+  "flightNumberText": "Flight number: {flightNumber}",
   "@flightNumberText": {
     "description": "",
     "placeholders": {
-      "count": {
+      "flightNumber": {
         "type": "num",
         "format": "compact"
+      }
+    }
+  },
+  "rocketNameText": "Rocket name: {rocketName}",
+  "@rocketNameText": {
+    "description": "",
+    "placeholders": {
+      "rocketName": {
+        "type": "String"
+      }
+    }
+  },
+  "launchSiteNameText": "Launch site: {launchSiteName}",
+  "@launchSiteNameText": {
+    "description": "",
+    "placeholders": {
+      "launchSiteName": {
+        "type": "String"
       }
     }
   }

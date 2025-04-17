@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_space_x/i18n/i18n.dart';
 
 import 'app_network_image.dart';
+import 'launch_status_note.dart';
 
 class LaunchListItem extends StatelessWidget {
   final String title;
@@ -65,29 +65,7 @@ class LaunchListItem extends StatelessWidget {
                       children: [
                         Text(year, style: TextTheme.of(context).labelMedium),
                         if (wasSuccess != null)
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 2,
-                              horizontal: 6,
-                            ),
-                            decoration: ShapeDecoration(
-                              shape: StadiumBorder(),
-                              color:
-                                  wasSuccess!
-                                      ? Colors.green.shade800
-                                      : ColorScheme.of(context).errorContainer,
-                            ),
-                            child: Text(
-                              wasSuccess!
-                                  ? context.localizations.successLabel
-                                  : context.localizations.failureLabel,
-                              style: TextTheme.of(
-                                context,
-                              ).labelMedium?.copyWith(
-                                color: ColorScheme.of(context).onSurface,
-                              ),
-                            ),
-                          ),
+                          LaunchStatusNote(wasSuccess: wasSuccess!),
                       ],
                     ),
                   ],

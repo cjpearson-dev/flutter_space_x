@@ -81,22 +81,50 @@ class LaunchDetailsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 8,
               children: [
-                Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      launch.missionName,
-                      style: TextTheme.of(context).titleLarge,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            launch.missionName,
+                            style: TextTheme.of(context).titleLarge,
+                          ),
+                          Text(
+                            formattedDate,
+                            style: TextTheme.of(context).labelMedium,
+                          ),
+                        ],
+                      ),
                     ),
-                    Text(
-                      formattedDate,
-                      style: TextTheme.of(context).labelMedium,
-                    ),
+                    if (launch.launchSuccess != null)
+                      LaunchStatusNote(wasSuccess: launch.launchSuccess!),
                   ],
                 ),
                 Text(context.localizations.flightNumberText(_flightNumber)),
+                Text(
+                  context.localizations.rocketNameText(
+                    launch.rocket.rocketName,
+                  ),
+                  style: TextTheme.of(context).bodyLarge,
+                ),
+                Text(
+                  context.localizations.launchSiteNameText(
+                    launch.launchSite.siteNameLong,
+                  ),
+                  style: TextTheme.of(context).bodyLarge,
+                ),
                 if (launch.details != null)
-                  Text(launch.details!, style: TextTheme.of(context).bodyLarge),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Text(
+                      launch.details!,
+                      style: TextTheme.of(context).bodyLarge,
+                    ),
+                  ),
                 _buildLinkList(launch.links),
               ],
             ),
