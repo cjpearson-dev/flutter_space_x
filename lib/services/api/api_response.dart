@@ -1,16 +1,10 @@
-class ApiResponse {
-  /// Indicates whether the response is successful.
-  final bool isSuccessful;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  /// Gets the data from the response.
-  final dynamic data;
+part 'api_response.freezed.dart';
 
-  /// Gets the message from the response.
-  final String? message;
+@freezed
+sealed class ApiResponse with _$ApiResponse {
+  const factory ApiResponse.success([dynamic data]) = ApiResponseSuccess;
 
-  /// Initialises the [ApiResponse] class that as successful and set the [data] object.
-  const ApiResponse.success([this.data]) : isSuccessful = true, message = null;
-
-  /// Initialises the [ApiResponse] class that as failed and sets the [message] object.
-  const ApiResponse.failure(this.message) : isSuccessful = false, data = null;
+  const factory ApiResponse.failure(String message) = ApiResponseError;
 }

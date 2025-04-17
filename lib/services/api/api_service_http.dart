@@ -7,13 +7,10 @@ import 'package:http/http.dart' as http;
 import 'api.dart';
 
 final class ApiServiceHttp implements ApiService {
-  // Would have this in an .env file if it wasn't a publicly accessible API.
-  final _baseUrl = 'https://api.spacexdata.com/v3';
-
   // CREATE
   @override
   Future<ApiResponse> post({
-    required String path,
+    required Uri url,
     Map<String, String>? headers,
     required Map<String, dynamic> body,
   }) {
@@ -24,13 +21,12 @@ final class ApiServiceHttp implements ApiService {
   // READ
   @override
   Future<ApiResponse> get({
-    required String path,
+    required Uri url,
     Map<String, String>? headers,
-    Map<String, String>? queryParameters,
   }) async {
     try {
       final response = await http
-          .get(Uri.https(_baseUrl, path, queryParameters), headers: headers)
+          .get(url, headers: headers)
           .timeout(const Duration(seconds: 10));
 
       // Handle different status codes - return success in the event of a 200, along with response body and a failure with message otherwise.
@@ -57,7 +53,7 @@ final class ApiServiceHttp implements ApiService {
   // UPDATE
   @override
   Future<ApiResponse> patch({
-    required String path,
+    required Uri url,
     Map<String, String>? headers,
     required Map<String, dynamic> body,
   }) {
@@ -67,7 +63,7 @@ final class ApiServiceHttp implements ApiService {
 
   @override
   Future<ApiResponse> put({
-    required String path,
+    required Uri url,
     Map<String, String>? headers,
     required Map<String, dynamic> body,
   }) {
@@ -78,7 +74,7 @@ final class ApiServiceHttp implements ApiService {
   // DELETE
   @override
   Future<ApiResponse> delete({
-    required String path,
+    required Uri url,
     Map<String, String>? headers,
     required Map<String, dynamic> body,
   }) {
