@@ -46,3 +46,5 @@ app.*.map.json
 
 # Generated files
 /lib/i18n/generated/
+**/*.freezed.dart
+**/*.g.dart

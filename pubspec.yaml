@@ -46,6 +46,13 @@ dependencies:
   # Service location
   get_it: ^8.0.3
 
+  # Code generation:
+  freezed_annotation: ^3.0.0
+  json_annotation: ^4.9.0
+
+  # Overrode this as 7.4.0 was causing issues with json_serializable
+  analyzer: 7.3.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -56,6 +63,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+
+  # Code generation
+  build_runner: ^2.4.15
+  freezed: ^3.0.6
+  json_serializable: ^6.9.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
