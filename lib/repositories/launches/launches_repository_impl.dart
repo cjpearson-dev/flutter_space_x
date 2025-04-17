@@ -33,7 +33,10 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
 
   @override
   Future<DataResponse<List<Launch>>> getPastLaunches() async {
-    final url = _constructUrl('launches/past');
+    final url = _constructUrl(
+      'launches/past',
+      queryParameters: {'order': 'desc'},
+    );
     final response = await _apiService.get(url: url);
 
     switch (response) {

@@ -46,22 +46,23 @@ class LaunchesListPage extends StatelessWidget {
 
     if (launches.isNotEmpty) {
       /// Show list of launches if fetched and not empty.
-      return ListView.builder(
+      return GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          childAspectRatio: 0.73,
+          crossAxisCount: 2,
+          crossAxisSpacing: 6.0,
+          mainAxisSpacing: 6.0,
+        ),
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         itemCount: launches.length,
         itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: EventListItem(
-              title: launches[index].missionName,
-              text: launches[index].details ?? '',
-              textMaxLines: 3,
-              onPress: () {
-                // context.read<LaunchesListCubit>().navigateToEventDetails(
-                //   launches[index].id,
-                // );
-              },
-            ),
+          final launch = launches[index];
+
+          return LaunchListItem(
+            title: launch.missionName,
+            year: launch.launchYear,
+            imageUrl: launch.links.flickrImages.firstOrNull,
+            wasSuccess: launch.launchSuccess,
           );
         },
       );
