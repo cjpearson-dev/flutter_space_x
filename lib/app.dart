@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_space_x/ui/views/history_list/view/history_list_page.dart';
+import 'package:flutter_space_x/injection/setup_locator.dart';
+import 'package:flutter_space_x/services/navigation/navigation_service.dart';
 
 import 'i18n/i18n.dart';
 
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       onGenerateTitle: (context) => context.localizations.appTitle,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: HistoryListPage(),
+      routerConfig: locator<NavigationService>().config,
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_space_x/ui/widgets/widgets.dart';
 
 import '../state/history_list_cubit.dart';
 
+@RoutePage()
 class HistoryListPage extends StatelessWidget {
   const HistoryListPage({super.key});
 
