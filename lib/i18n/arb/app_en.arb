@@ -14,5 +14,15 @@
   "noResultsMsg": "No results found",
   "@noResultsMsg": {
     "description": "The message displayed if an expected array of fetched data is empty"
+  },
+  "flightNumberText": "Flight number: {count}",
+  "@flightNumberText": {
+    "description": "",
+    "placeholders": {
+      "count": {
+        "type": "num",
+        "format": "compact"
+      }
+    }
   }
 }

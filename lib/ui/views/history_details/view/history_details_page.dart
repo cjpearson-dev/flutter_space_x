@@ -70,7 +70,7 @@ class HistoryDetailsPage extends StatelessWidget {
               ],
             ),
             if (event.flightNumber != null)
-              Text('Flight number: ${event.flightNumber}'),
+              Text(context.localizations.flightNumberText(event.flightNumber!)),
             Text(event.details, style: TextTheme.of(context).bodyLarge),
           ],
         ),
