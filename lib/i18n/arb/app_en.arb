@@ -6,5 +6,13 @@
   "homePageTitle": "Home",
   "@homePageTitle": {
     "description": "The header bar title of the home page"
+  },
+  "generalErrorMsg": "Something went wrong",
+  "@generalErrorMsg": {
+    "description": "The generic message displayed in the event of an error if a more specific message is unavailable"
+  },
+  "noResultsMsg": "No results found",
+  "@noResultsMsg": {
+    "description": "The message displayed if an expected array of fetched data is empty"
   }
 }

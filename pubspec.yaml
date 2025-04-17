@@ -50,6 +50,9 @@ dependencies:
   freezed_annotation: ^3.0.0
   json_annotation: ^4.9.0
 
+  # State management
+  flutter_bloc: ^9.1.0
+
   # Overrode this as 7.4.0 was causing issues with json_serializable
   analyzer: 7.3.0
 
