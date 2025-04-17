@@ -17,7 +17,7 @@ class HistoryDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(context.localizations.homePageTitle)),
+      appBar: AppBar(title: Text(context.localizations.historyDetailsTitle)),
       body: BlocProvider(
         /// Create cubit and immediately fetch data.
         create: (_) => HistoryDetailsCubit()..load(_eventId),

@@ -5,20 +5,20 @@ import 'package:flutter_space_x/i18n/i18n.dart';
 import 'package:flutter_space_x/repositories/data_loading_status.dart';
 import 'package:flutter_space_x/ui/widgets/widgets.dart';
 
-import '../state/history_list_cubit.dart';
+import '../state/launches_list_cubit.dart';
 
 @RoutePage()
-class HistoryListPage extends StatelessWidget {
-  const HistoryListPage({super.key});
+class LaunchesListPage extends StatelessWidget {
+  const LaunchesListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       /// Create cubit and immediately fetch data.
-      create: (_) => HistoryListCubit()..load(),
+      create: (_) => LaunchesListCubit()..load(),
       child: BlocSelector<
-        HistoryListCubit,
-        HistoryListState,
+        LaunchesListCubit,
+        LaunchesListState,
         (DataLoadingStatus, String?)
       >(
         /// Create a record of the required state fields.
@@ -28,7 +28,7 @@ class HistoryListPage extends StatelessWidget {
           final (loadingStatus, error) = state;
 
           return DataLoadingContainer(
-            onRefresh: context.read<HistoryListCubit>().load,
+            onRefresh: context.read<LaunchesListCubit>().load,
             loadingStatus: loadingStatus,
             successContent: _buildSuccessLayout,
             errorMessage: error,
@@ -40,25 +40,25 @@ class HistoryListPage extends StatelessWidget {
 
   Widget _buildSuccessLayout(BuildContext context) {
     /// Guaranteed to have content at this point.
-    final events =
-        context.select((HistoryListCubit cubit) => cubit.state.content)!;
+    final launches =
+        context.select((LaunchesListCubit cubit) => cubit.state.content)!;
 
-    if (events.isNotEmpty) {
-      /// Show list of events if fetched and not empty.
+    if (launches.isNotEmpty) {
+      /// Show list of launches if fetched and not empty.
       return ListView.builder(
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-        itemCount: events.length,
+        itemCount: launches.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 8),
             child: EventListItem(
-              title: events[index].title,
-              text: events[index].details,
+              title: launches[index].missionName,
+              text: launches[index].details ?? '',
               textMaxLines: 3,
               onPress: () {
-                context.read<HistoryListCubit>().navigateToEventDetails(
-                  events[index].id,
-                );
+                // context.read<LaunchesListCubit>().navigateToEventDetails(
+                //   launches[index].id,
+                // );
               },
             ),
           );

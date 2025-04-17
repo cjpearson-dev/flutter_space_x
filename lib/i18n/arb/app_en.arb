@@ -3,9 +3,17 @@
   "@appTitle": {
     "description": "The title of the app"
   },
-  "homePageTitle": "Home",
-  "@homePageTitle": {
-    "description": "The header bar title of the home page"
+  "launchesListTitle": "Launches",
+  "@launchesListTitle": {
+    "description": "The header bar title of the launches tab on the dashboard page"
+  },
+  "historyListTitle": "News",
+  "@historyListTitle": {
+    "description": "The header bar title of the history tab on the dashboard page"
+  },
+  "historyDetailsTitle": "Article",
+  "@historyDetailsTitle": {
+    "description": "The header bar title of the history details page"
   },
   "generalErrorMsg": "Something went wrong",
   "@generalErrorMsg": {
