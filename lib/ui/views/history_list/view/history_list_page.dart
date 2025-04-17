@@ -7,6 +7,7 @@ import 'package:flutter_space_x/ui/widgets/widgets.dart';
 
 import '../state/history_list_cubit.dart';
 
+// Would ideally with more time replace these annotations with my own to decouple these views completely from auto_route.
 @RoutePage()
 class HistoryListPage extends StatelessWidget {
   const HistoryListPage({super.key});

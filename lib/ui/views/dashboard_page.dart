@@ -1,49 +1,48 @@
-import 'package:auto_route/auto_route.dart';
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
+import 'package:flutter_space_x/injection/setup_locator.dart';
+import 'package:flutter_space_x/services/navigation/navigation_service.dart';
 
-import '../../services/navigation/app_router.gr.dart';
-
+// Would ideally with more time replace these annotations with my own to decouple these views completely from auto_route.
 @RoutePage()
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AutoTabsRouter(
-      routes: const [LaunchesListRoute(), HistoryListRoute()],
-      transitionBuilder:
-          (context, child, animation) =>
-              FadeTransition(opacity: animation, child: child),
-      builder: (context, child) {
-        final tabsRouter = AutoTabsRouter.of(context);
+    // I don't super like accessing the service locator like this in the view layer.
+    // Usually prefer to do this in the view model layer (like a bloc or cubit) but is unavoidable sometimes and it the interests of time.
+    final navigationService = locator<NavigationService>();
 
-        final appBarTitles = [
-          context.localizations.launchesListTitle,
-          context.localizations.historyListTitle,
-        ];
+    return navigationService.createDashboardTabRouter((context, child) {
+      final appBarTitles = [
+        context.localizations.launchesListTitle,
+        context.localizations.historyListTitle,
+      ];
 
-        return Scaffold(
-          body: child,
-          appBar: AppBar(title: Text(appBarTitles[tabsRouter.activeIndex])),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: tabsRouter.activeIndex,
-            onTap: (index) {
-              tabsRouter.setActiveIndex(index);
-            },
-            items: [
-              BottomNavigationBarItem(
-                label: appBarTitles[0],
-                icon: Icon(Icons.rocket_outlined),
-              ),
-              BottomNavigationBarItem(
-                label: appBarTitles[1],
-                icon: Icon(Icons.article_outlined),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+      return Scaffold(
+        body: child,
+        appBar: AppBar(
+          title: Text(appBarTitles[navigationService.activeTabIndex]),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: navigationService.activeTabIndex,
+          onTap: (index) {
+            navigationService.setActiveTabIndex(index);
+          },
+          items: [
+            BottomNavigationBarItem(
+              label: appBarTitles[0],
+              icon: Icon(Icons.rocket_outlined),
+            ),
+            BottomNavigationBarItem(
+              label: appBarTitles[1],
+              icon: Icon(Icons.article_outlined),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
