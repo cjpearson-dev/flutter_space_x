@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
+import 'package:flutter_space_x/models/launch.dart';
 import 'package:flutter_space_x/repositories/data_loading_status.dart';
 import 'package:flutter_space_x/ui/widgets/widgets.dart';
 import 'package:flutter_space_x/utils/date_format.dart';
@@ -96,11 +97,28 @@ class LaunchDetailsPage extends StatelessWidget {
                 Text(context.localizations.flightNumberText(_flightNumber)),
                 if (launch.details != null)
                   Text(launch.details!, style: TextTheme.of(context).bodyLarge),
+                _buildLinkList(launch.links),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildLinkList(LaunchLinks links) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (links.articleLink != null)
+          AppLinkButton(text: 'Article', urlString: links.articleLink!),
+        if (links.redditLaunch != null)
+          AppLinkButton(text: 'Reddit', urlString: links.redditLaunch!),
+        if (links.wikipedia != null)
+          AppLinkButton(text: 'Wikipedia', urlString: links.wikipedia!),
+        if (links.videoLink != null)
+          AppLinkButton(text: 'Youtube', urlString: links.videoLink!),
+      ],
     );
   }
 }

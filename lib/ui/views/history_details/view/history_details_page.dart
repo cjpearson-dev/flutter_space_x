@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
+import 'package:flutter_space_x/models/historical_event.dart';
 import 'package:flutter_space_x/repositories/data_loading_status.dart';
 import 'package:flutter_space_x/ui/widgets/widgets.dart';
 import 'package:flutter_space_x/utils/date_format.dart';
@@ -70,23 +71,36 @@ class HistoryDetailsPage extends StatelessWidget {
               ],
             ),
             if (event.flightNumber != null)
-              TextButton(
+              AppTextButton(
+                text: context.localizations.flightNumberText(
+                  event.flightNumber!,
+                ),
                 onPressed: () {
                   context.read<HistoryDetailsCubit>().navigateToEventDetails(
                     event.flightNumber!,
                   );
                 },
-                style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                child: Text(
-                  context.localizations.flightNumberText(event.flightNumber!),
-                  style: TextStyle(decoration: TextDecoration.underline),
-                ),
               ),
 
             Text(event.details, style: TextTheme.of(context).bodyLarge),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: _buildLinks(event.links),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  List<Widget> _buildLinks(EventLinks eventLinks) {
+    List<Widget> links = [];
+
+    for (var link in eventLinks.toJson().entries) {
+      if (link.value != null) {
+        links.add(AppLinkButton(text: link.key, urlString: link.value));
+      }
+    }
+    return links;
   }
 }
