@@ -14,7 +14,7 @@ final class HistoryRepositoryImpl implements HistoryRepository {
 
   @override
   Future<DataResponse<List<HistoricalEvent>>> getAllEvents() async {
-    final url = _constructUrl('history');
+    final url = _constructUrl('history', queryParameters: {'order': 'desc'});
     final response = await _apiService.get(url: url);
 
     switch (response) {

@@ -5,6 +5,7 @@ import 'package:flutter_space_x/injection/setup_locator.dart';
 import 'package:flutter_space_x/models/historical_event.dart';
 import 'package:flutter_space_x/repositories/data_loading_status.dart';
 import 'package:flutter_space_x/repositories/history/history_repository.dart';
+import 'package:flutter_space_x/services/navigation/navigation_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'history_details_cubit.freezed.dart';
@@ -12,6 +13,8 @@ part 'history_details_state.dart';
 
 final class HistoryDetailsCubit extends Cubit<HistoryDetailsState> {
   final _historyRepository = locator<HistoryRepository>();
+
+  final _navigationService = locator<NavigationService>();
 
   HistoryDetailsCubit()
     : super(HistoryDetailsState(loadingStatus: DataLoadingStatus.initial));
@@ -47,4 +50,7 @@ final class HistoryDetailsCubit extends Cubit<HistoryDetailsState> {
       );
     }
   }
+
+  Future<void> navigateToEventDetails(int flightNumber) =>
+      _navigationService.navigateToLaunchDetails(flightNumber);
 }

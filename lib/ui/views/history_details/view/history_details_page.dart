@@ -70,7 +70,19 @@ class HistoryDetailsPage extends StatelessWidget {
               ],
             ),
             if (event.flightNumber != null)
-              Text(context.localizations.flightNumberText(event.flightNumber!)),
+              TextButton(
+                onPressed: () {
+                  context.read<HistoryDetailsCubit>().navigateToEventDetails(
+                    event.flightNumber!,
+                  );
+                },
+                style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                child: Text(
+                  context.localizations.flightNumberText(event.flightNumber!),
+                  style: TextStyle(decoration: TextDecoration.underline),
+                ),
+              ),
+
             Text(event.details, style: TextTheme.of(context).bodyLarge),
           ],
         ),
