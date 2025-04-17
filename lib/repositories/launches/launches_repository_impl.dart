@@ -35,6 +35,7 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
   Future<DataResponse<List<Launch>>> getPastLaunches({
     int? limit,
     int? offset,
+    int? year,
   }) async {
     final url = _constructUrl(
       'launches/past',
@@ -42,6 +43,7 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
         'order': 'desc',
         if (limit != null) 'limit': '$limit',
         if (offset != null) 'offset': '$offset',
+        if (year != null) 'launch_year': '$year',
       },
     );
     final response = await _apiService.get(url: url);

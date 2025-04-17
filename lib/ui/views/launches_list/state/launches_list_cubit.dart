@@ -41,6 +41,7 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
     final response = await _historyRepository.getPastLaunches(
       limit: limit,
       offset: 0,
+      year: state.yearFilter,
     );
 
     if (response.isSuccessful) {
@@ -73,6 +74,7 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
     final response = await _historyRepository.getPastLaunches(
       limit: limit,
       offset: state.content?.length,
+      year: state.yearFilter,
     );
 
     if (response.isSuccessful) {
@@ -101,6 +103,10 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
         ),
       );
     }
+  }
+
+  void onYearChanged(int? year) {
+    emit(state.copyWith(yearFilter: year));
   }
 
   bool onScrollNotification(ScrollNotification scrollInfo) {

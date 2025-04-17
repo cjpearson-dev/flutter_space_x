@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_space_x/features/filters/launches/launch_filters_cubit.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
 import 'package:flutter_space_x/repositories/data_loading_status.dart';
 import 'package:flutter_space_x/ui/widgets/widgets.dart';
@@ -28,11 +29,26 @@ class LaunchesListPage extends StatelessWidget {
           /// Create individual variables of the selected state using record destructuring.
           final (loadingStatus, error) = state;
 
-          return DataLoadingContainer(
-            onRefresh: context.read<LaunchesListCubit>().load,
-            loadingStatus: loadingStatus,
-            successContent: _buildSuccessLayout,
-            errorMessage: error,
+          return BlocListener<LaunchFiltersCubit, LaunchFiltersState>(
+            // Listen to filters cubit and reload when selected year changes.
+            listenWhen:
+                (prevState, currState) =>
+                    prevState.selectedYear != currState.selectedYear,
+            listener: (context, state) {
+              context.read<LaunchesListCubit>().onYearChanged(
+                state.selectedYear,
+              );
+              Future.delayed(Duration(milliseconds: 500)).then((_) {
+                context.read<LaunchesListCubit>().load();
+                Scaffold.of(context).closeEndDrawer();
+              });
+            },
+            child: DataLoadingContainer(
+              onRefresh: context.read<LaunchesListCubit>().load,
+              loadingStatus: loadingStatus,
+              successContent: _buildSuccessLayout,
+              errorMessage: error,
+            ),
           );
         },
       ),
