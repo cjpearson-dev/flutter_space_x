@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_space_x/i18n/i18n.dart';
+
+import 'app_network_image.dart';
 
 class LaunchListItem extends StatelessWidget {
   final String title;
@@ -36,7 +39,7 @@ class LaunchListItem extends StatelessWidget {
                 aspectRatio: 5 / 4,
                 child:
                     imageUrl != null
-                        ? Image.network(imageUrl!, fit: BoxFit.cover)
+                        ? AppNetworkImage(imageUrl!, fit: BoxFit.cover)
                         : Center(
                           child: Icon(Icons.image_not_supported_outlined),
                         ),
@@ -75,7 +78,9 @@ class LaunchListItem extends StatelessWidget {
                                       : ColorScheme.of(context).errorContainer,
                             ),
                             child: Text(
-                              wasSuccess! ? 'Success' : 'Failure',
+                              wasSuccess!
+                                  ? context.localizations.successLabel
+                                  : context.localizations.failureLabel,
                               style: TextTheme.of(
                                 context,
                               ).labelMedium?.copyWith(

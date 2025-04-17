@@ -23,6 +23,14 @@
   "@noResultsMsg": {
     "description": "The message displayed if an expected array of fetched data is empty"
   },
+  "successLabel": "Success",
+  "@successLabel": {
+    "description": "The text displayed denoting a successful launch"
+  },
+  "failureLabel": "Failure",
+  "@failureLabel": {
+    "description": "The text displayed denoting an unsuccessful launch"
+  },
   "flightNumberText": "Flight number: {count}",
   "@flightNumberText": {
     "description": "",
