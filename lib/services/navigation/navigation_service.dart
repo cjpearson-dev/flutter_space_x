@@ -13,5 +13,7 @@ abstract interface class NavigationService {
 
   Future<T?> navigateToHistoryDetails<T extends Object?>(int eventId);
 
+  Future<T?> navigateToLaunchDetails<T extends Object?>(int flightNumber);
+
   void pop<T extends Object?>([T? result]);
 }

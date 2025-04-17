@@ -61,6 +61,11 @@ class LaunchesListPage extends StatelessWidget {
             final launch = launches[index];
 
             return LaunchListItem(
+              onPress: () {
+                context.read<LaunchesListCubit>().navigateToEventDetails(
+                  launch.flightNumber,
+                );
+              },
               title: launch.missionName,
               year: launch.launchYear,
               imageUrl: launch.links.flickrImages.firstOrNull,

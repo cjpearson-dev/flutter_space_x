@@ -40,6 +40,11 @@ class NavigationServiceAutoRoute implements NavigationService {
   }
 
   @override
+  Future<T?> navigateToLaunchDetails<T extends Object?>(int flightNumber) {
+    return _rootRouter.push(LaunchDetailsRoute(flightNumber: flightNumber));
+  }
+
+  @override
   void pop<T extends Object?>([T? result]) {
     return _rootRouter.pop(result);
   }

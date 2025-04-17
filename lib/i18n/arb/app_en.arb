@@ -7,6 +7,10 @@
   "@launchesListTitle": {
     "description": "The header bar title of the launches tab on the dashboard page"
   },
+  "launchDetailsTitle": "Launch",
+  "@launchDetailsTitle": {
+    "description": "The header bar title of the launch details page"
+  },
   "historyListTitle": "News",
   "@historyListTitle": {
     "description": "The header bar title of the history tab on the dashboard page"

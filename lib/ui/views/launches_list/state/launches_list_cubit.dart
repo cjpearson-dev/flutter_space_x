@@ -6,6 +6,7 @@ import 'package:flutter_space_x/injection/setup_locator.dart';
 import 'package:flutter_space_x/models/launch.dart';
 import 'package:flutter_space_x/repositories/data_loading_status.dart';
 import 'package:flutter_space_x/repositories/launches/launches_repository.dart';
+import 'package:flutter_space_x/services/navigation/navigation_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'launches_list_cubit.freezed.dart';
@@ -14,7 +15,7 @@ part 'launches_list_state.dart';
 final class LaunchesListCubit extends Cubit<LaunchesListState> {
   final _historyRepository = locator<LaunchesRepository>();
 
-  // final _navigationService = locator<NavigationService>();
+  final _navigationService = locator<NavigationService>();
 
   LaunchesListCubit()
     : super(LaunchesListState(loadingStatus: DataLoadingStatus.initial));
@@ -118,6 +119,6 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
     return false;
   }
 
-  // Future<void> navigateToEventDetails(int eventId) =>
-  //     _navigationService.navigateToLaunchDetails(eventId);
+  Future<void> navigateToEventDetails(int flightNumber) =>
+      _navigationService.navigateToLaunchDetails(flightNumber);
 }
