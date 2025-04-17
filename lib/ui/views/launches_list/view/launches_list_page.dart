@@ -1,7 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_space_x/features/filters/launches/launch_filters_cubit.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
 import 'package:flutter_space_x/repositories/data_loading_status.dart';
 import 'package:flutter_space_x/ui/widgets/widgets.dart';
@@ -10,48 +9,53 @@ import '../state/launches_list_cubit.dart';
 
 // Would ideally with more time replace these annotations with my own to decouple these views completely from auto_route.
 @RoutePage()
-class LaunchesListPage extends StatelessWidget {
+class LaunchesListPage extends StatefulWidget {
   const LaunchesListPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      /// Create cubit and immediately fetch data.
-      create: (_) => LaunchesListCubit()..load(),
-      child: BlocSelector<
-        LaunchesListCubit,
-        LaunchesListState,
-        (DataLoadingStatus, String?)
-      >(
-        /// Create a record of the required state fields.
-        selector: (state) => (state.loadingStatus, state.error),
-        builder: (context, state) {
-          /// Create individual variables of the selected state using record destructuring.
-          final (loadingStatus, error) = state;
+  State<LaunchesListPage> createState() => _LaunchesListPageState();
+}
 
-          return BlocListener<LaunchFiltersCubit, LaunchFiltersState>(
-            // Listen to filters cubit and reload when selected year changes.
-            listenWhen:
-                (prevState, currState) =>
-                    prevState.selectedYear != currState.selectedYear,
-            listener: (context, state) {
-              context.read<LaunchesListCubit>().onYearChanged(
-                state.selectedYear,
-              );
-              Future.delayed(Duration(milliseconds: 500)).then((_) {
-                context.read<LaunchesListCubit>().load();
-                Scaffold.of(context).closeEndDrawer();
-              });
-            },
-            child: DataLoadingContainer(
-              onRefresh: context.read<LaunchesListCubit>().load,
-              loadingStatus: loadingStatus,
-              successContent: _buildSuccessLayout,
-              errorMessage: error,
-            ),
-          );
-        },
-      ),
+class _LaunchesListPageState extends State<LaunchesListPage> {
+  // Made this stateful purely for access to the initState method to trigger data fetch.
+  @override
+  void initState() {
+    super.initState();
+    context.read<LaunchesListCubit>().load();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<
+      LaunchesListCubit,
+      LaunchesListState,
+      (DataLoadingStatus, String?)
+    >(
+      /// Create a record of the required state fields.
+      selector: (state) => (state.loadingStatus, state.error),
+      builder: (context, state) {
+        /// Create individual variables of the selected state using record destructuring.
+        final (loadingStatus, error) = state;
+
+        return BlocListener<LaunchesListCubit, LaunchesListState>(
+          // Listen to cubit and reload when selected year changes.
+          listenWhen:
+              (prevState, currState) =>
+                  prevState.yearFilter != currState.yearFilter,
+          listener: (context, state) {
+            context.read<LaunchesListCubit>().load();
+            // Close drawer after selection.
+            Scaffold.of(context).closeEndDrawer();
+          },
+          child: DataLoadingContainer(
+            onRefresh:
+                () => context.read<LaunchesListCubit>().load(refresh: true),
+            loadingStatus: loadingStatus,
+            successContent: _buildSuccessLayout,
+            errorMessage: error,
+          ),
+        );
+      },
     );
   }
 

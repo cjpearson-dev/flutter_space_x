@@ -31,6 +31,14 @@
   "@successLabel": {
     "description": "The text displayed denoting a successful launch"
   },
+  "filterMenuHeading": "Filters",
+  "@filterMenuHeading": {
+    "description": "The heading displayed at the top of the filter menu"
+  },
+  "yearSelectorLabel": "Year",
+  "@yearSelectorLabel": {
+    "description": "The label for the filter by year dropdown selector"
+  },
   "failureLabel": "Failure",
   "@failureLabel": {
     "description": "The text displayed denoting an unsuccessful launch"

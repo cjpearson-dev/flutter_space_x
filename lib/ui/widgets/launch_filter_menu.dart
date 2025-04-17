@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_space_x/features/filters/launches/launch_filters_cubit.dart';
+import 'package:flutter_space_x/i18n/i18n.dart';
 
+import '../views/launches_list/state/launches_list_cubit.dart';
 import 'forms/year_dropdown_selector.dart';
 
-class SortFilterMenu extends StatelessWidget {
-  const SortFilterMenu({super.key});
+class LaunchFilterMenu extends StatelessWidget {
+  const LaunchFilterMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,10 @@ class SortFilterMenu extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Filter', style: TextTheme.of(context).headlineMedium),
+                  Text(
+                    context.localizations.filterMenuHeading,
+                    style: TextTheme.of(context).headlineMedium,
+                  ),
                   IconButton(
                     icon: const Icon(Icons.close, size: 36),
                     onPressed: () {
@@ -44,17 +48,13 @@ class SortFilterMenu extends StatelessWidget {
                   child: ListView(
                     padding: const EdgeInsets.symmetric(vertical: 18.0),
                     children: [
-                      BlocSelector<
-                        LaunchFiltersCubit,
-                        LaunchFiltersState,
-                        int?
-                      >(
-                        selector: (state) => state.selectedYear,
+                      BlocSelector<LaunchesListCubit, LaunchesListState, int?>(
+                        selector: (state) => state.yearFilter,
                         builder: (context, selectedYear) {
                           return YearDropdownSelector(
                             selectedYear: selectedYear,
                             onChanged: (int? value) {
-                              context.read<LaunchFiltersCubit>().onYearChanged(
+                              context.read<LaunchesListCubit>().onYearChanged(
                                 value,
                               );
                             },

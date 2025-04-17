@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_space_x/i18n/i18n.dart';
 
 class YearDropdownSelector extends StatelessWidget {
   final int? selectedYear;
@@ -26,7 +27,7 @@ class YearDropdownSelector extends StatelessWidget {
     return DropdownButtonFormField<int>(
       value: selectedYear,
       decoration: InputDecoration(
-        labelText: 'Year',
+        labelText: context.localizations.yearSelectorLabel,
         border: OutlineInputBorder(),
       ),
       items:

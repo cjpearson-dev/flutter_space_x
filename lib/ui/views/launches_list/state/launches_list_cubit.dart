@@ -25,16 +25,14 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
 
   // This method will trigger once when the class is constructed by the BlocProvider,
   // then subsequently when the user pulls down to refresh.
-  Future<void> load() async {
+  Future<void> load({bool refresh = false}) async {
     // On first load set status to [loading], else [refreshing]:
     // While loading, a full screen progress indicator will appear until content is fetched.
     // While refreshing, content is preserved while data refreshes in the background. A refresh indicator will appear atop the existing content.
     emit(
       state.copyWith(
         loadingStatus:
-            state.loadingStatus == DataLoadingStatus.initial
-                ? DataLoadingStatus.loading
-                : DataLoadingStatus.refreshing,
+            !refresh ? DataLoadingStatus.loading : DataLoadingStatus.refreshing,
       ),
     );
 

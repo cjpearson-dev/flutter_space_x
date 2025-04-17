@@ -1,12 +1,12 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_space_x/features/filters/launches/launch_filters_cubit.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
 import 'package:flutter_space_x/injection/setup_locator.dart';
 import 'package:flutter_space_x/services/navigation/navigation_service.dart';
+import 'package:flutter_space_x/ui/views/launches_list/state/launches_list_cubit.dart';
 
-import '../widgets/sort_filter_menu.dart';
+import '../widgets/launch_filter_menu.dart';
 
 // Would ideally with more time replace these annotations with my own to decouple these views completely from auto_route.
 @RoutePage()
@@ -25,14 +25,14 @@ class DashboardPage extends StatelessWidget {
         context.localizations.historyListTitle,
       ];
 
-      return BlocProvider<LaunchFiltersCubit>(
-        create: (_) => LaunchFiltersCubit(),
+      return BlocProvider<LaunchesListCubit>(
+        create: (_) => LaunchesListCubit(),
         child: Scaffold(
           body: child,
           appBar: AppBar(
             title: Text(appBarTitles[navigationService.activeTabIndex]),
             actions: [
-              // Filter/sort menu button. Only show for launches list tab.
+              // Filter menu button. Only show for launches list tab.
               if (navigationService.activeTabIndex == 0)
                 // Builder around here to make sure it has the correct context.
                 Builder(
@@ -49,7 +49,7 @@ class DashboardPage extends StatelessWidget {
           ),
           // Only show filters for launches list tab.
           endDrawer:
-              navigationService.activeTabIndex == 0 ? SortFilterMenu() : null,
+              navigationService.activeTabIndex == 0 ? LaunchFilterMenu() : null,
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: navigationService.activeTabIndex,
             onTap: (index) {
