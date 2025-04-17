@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'i18n/i18n.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -11,7 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      onGenerateTitle: (context) => context.localizations.appTitle,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -30,7 +34,11 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Builder(
+        builder: (context) {
+          return MyHomePage(title: context.localizations.homePageTitle);
+        },
+      ),
     );
   }
 }

@@ -1,0 +1,10 @@
+{
+  "appTitle": "Flutter Space X",
+  "@appTitle": {
+    "description": "The title of the app"
+  },
+  "homePageTitle": "Home",
+  "@homePageTitle": {
+    "description": "The header bar title of the home page"
+  }
+}
