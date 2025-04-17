@@ -39,6 +39,14 @@
   "@yearSelectorLabel": {
     "description": "The label for the filter by year dropdown selector"
   },
+  "searchButtonText": "Search",
+  "@searchButtonText": {
+    "description": "The text displayed on search buttons"
+  },
+  "resetButtonText": "Reset",
+  "@resetButtonText": {
+    "description": "The text displayed on form reset buttons"
+  },
   "failureLabel": "Failure",
   "@failureLabel": {
     "description": "The text displayed denoting an unsuccessful launch"

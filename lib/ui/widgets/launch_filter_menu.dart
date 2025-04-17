@@ -66,6 +66,44 @@ class LaunchFilterMenu extends StatelessWidget {
                 ),
               ),
             ),
+            Container(
+              constraints: BoxConstraints(minHeight: kToolbarHeight),
+              padding: EdgeInsets.all(18.0),
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: ColorScheme.of(context).onSurfaceVariant,
+                  ),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                spacing: 16.0,
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        context.read<LaunchesListCubit>().resetFilters();
+                        // Close drawer after selection.
+                        Scaffold.of(context).closeEndDrawer();
+                      },
+                      child: Text(context.localizations.resetButtonText),
+                    ),
+                  ),
+                  Expanded(
+                    child: FilledButton(
+                      onPressed: () {
+                        context.read<LaunchesListCubit>().load();
+                        // Close drawer after selection.
+                        Scaffold.of(context).closeEndDrawer();
+                      },
+                      child: Text(context.localizations.searchButtonText),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

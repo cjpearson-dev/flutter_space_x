@@ -107,6 +107,11 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
     emit(state.copyWith(yearFilter: year));
   }
 
+  void resetFilters() {
+    emit(state.copyWith(yearFilter: null));
+    load();
+  }
+
   bool onScrollNotification(ScrollNotification scrollInfo) {
     // Tweak this value as necessary to get as seamless a lazy loading scroll as possible.
     final double triggerOffset = 300; // Trigger refresh when 300px from bottom

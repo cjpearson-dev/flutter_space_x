@@ -37,23 +37,12 @@ class _LaunchesListPageState extends State<LaunchesListPage> {
         /// Create individual variables of the selected state using record destructuring.
         final (loadingStatus, error) = state;
 
-        return BlocListener<LaunchesListCubit, LaunchesListState>(
-          // Listen to cubit and reload when selected year changes.
-          listenWhen:
-              (prevState, currState) =>
-                  prevState.yearFilter != currState.yearFilter,
-          listener: (context, state) {
-            context.read<LaunchesListCubit>().load();
-            // Close drawer after selection.
-            Scaffold.of(context).closeEndDrawer();
-          },
-          child: DataLoadingContainer(
-            onRefresh:
-                () => context.read<LaunchesListCubit>().load(refresh: true),
-            loadingStatus: loadingStatus,
-            successContent: _buildSuccessLayout,
-            errorMessage: error,
-          ),
+        return DataLoadingContainer(
+          onRefresh:
+              () => context.read<LaunchesListCubit>().load(refresh: true),
+          loadingStatus: loadingStatus,
+          successContent: _buildSuccessLayout,
+          errorMessage: error,
         );
       },
     );
