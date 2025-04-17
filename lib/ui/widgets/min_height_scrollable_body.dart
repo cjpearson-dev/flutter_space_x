@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 class MinHeightScrollableBody extends StatelessWidget {
   final Widget child;
 
-  const MinHeightScrollableBody({super.key, required this.child});
+  final bool centreChild;
+
+  const MinHeightScrollableBody({
+    super.key,
+    required this.child,
+    this.centreChild = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +20,7 @@ class MinHeightScrollableBody extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: constraints.maxHeight),
-            child: Center(child: child),
+            child: centreChild ? Center(child: child) : child,
           ),
         );
       },

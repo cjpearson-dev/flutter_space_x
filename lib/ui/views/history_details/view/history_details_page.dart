@@ -32,14 +32,12 @@ class HistoryDetailsPage extends StatelessWidget {
             /// Create individual variables of the selected state using record destructuring.
             final (loadingStatus, error) = state;
 
-            return RefreshIndicator(
+            return DataLoadingContainer(
               onRefresh:
                   () => context.read<HistoryDetailsCubit>().load(_eventId),
-              child: DataLoadingContainer(
-                loadingStatus: loadingStatus,
-                successContent: _buildSuccessLayout,
-                errorMessage: error,
-              ),
+              loadingStatus: loadingStatus,
+              successContent: _buildSuccessLayout,
+              errorMessage: error,
             );
           },
         ),
@@ -56,23 +54,26 @@ class HistoryDetailsPage extends StatelessWidget {
       DateTime.parse(event.eventDateUtc),
     );
 
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 8,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(event.title, style: TextTheme.of(context).titleLarge),
-              Text(formattedDate, style: TextTheme.of(context).labelMedium),
-            ],
-          ),
-          if (event.flightNumber != null)
-            Text('Flight number: ${event.flightNumber}'),
-          Text(event.details, style: TextTheme.of(context).bodyLarge),
-        ],
+    return MinHeightScrollableBody(
+      centreChild: false,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 8,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(event.title, style: TextTheme.of(context).titleLarge),
+                Text(formattedDate, style: TextTheme.of(context).labelMedium),
+              ],
+            ),
+            if (event.flightNumber != null)
+              Text('Flight number: ${event.flightNumber}'),
+            Text(event.details, style: TextTheme.of(context).bodyLarge),
+          ],
+        ),
       ),
     );
   }

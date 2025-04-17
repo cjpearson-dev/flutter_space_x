@@ -29,13 +29,11 @@ class HistoryListPage extends StatelessWidget {
             /// Create individual variables of the selected state using record destructuring.
             final (loadingStatus, error) = state;
 
-            return RefreshIndicator(
+            return DataLoadingContainer(
               onRefresh: context.read<HistoryListCubit>().load,
-              child: DataLoadingContainer(
-                loadingStatus: loadingStatus,
-                successContent: _buildSuccessLayout,
-                errorMessage: error,
-              ),
+              loadingStatus: loadingStatus,
+              successContent: _buildSuccessLayout,
+              errorMessage: error,
             );
           },
         ),

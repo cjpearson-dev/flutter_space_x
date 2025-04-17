@@ -1,1 +1,1 @@
-enum DataLoadingStatus { initial, loading, success, failure }
+enum DataLoadingStatus { initial, loading, refreshing, success, failure }

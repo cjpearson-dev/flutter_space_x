@@ -15,6 +15,8 @@ class DataLoadingContainer extends StatelessWidget {
 
   final String? errorMessage;
 
+  final Future<void> Function()? onRefresh;
+
   const DataLoadingContainer({
     super.key,
     required this.loadingStatus,
@@ -22,28 +24,42 @@ class DataLoadingContainer extends StatelessWidget {
     this.loadingContent,
     this.failureContent,
     this.errorMessage,
+    this.onRefresh,
   });
 
   @override
   Widget build(BuildContext context) {
-    switch (loadingStatus) {
-      case DataLoadingStatus.initial:
-        return const SizedBox();
+    final canRefresh =
+        onRefresh != null &&
+        (loadingStatus == DataLoadingStatus.success ||
+            loadingStatus == DataLoadingStatus.success);
 
-      case DataLoadingStatus.loading:
-        return loadingContent != null
-            ? loadingContent!(context)
-            : const Center(child: CircularProgressIndicator());
+    return RefreshIndicator(
+      onRefresh: canRefresh ? onRefresh! : () async {},
+      child: Builder(
+        builder: (context) {
+          switch (loadingStatus) {
+            case DataLoadingStatus.initial:
+              return const SizedBox();
 
-      case DataLoadingStatus.success:
-        return successContent(context);
+            case DataLoadingStatus.loading:
+              return loadingContent != null
+                  ? loadingContent!(context)
+                  : const Center(child: CircularProgressIndicator());
 
-      case DataLoadingStatus.failure:
-        return failureContent != null
-            ? failureContent!(context)
-            : ScreenErrorMessage(
-              errorMessage ?? context.localizations.generalErrorMsg,
-            );
-    }
+            case DataLoadingStatus.success:
+            case DataLoadingStatus.refreshing:
+              return successContent(context);
+
+            case DataLoadingStatus.failure:
+              return failureContent != null
+                  ? failureContent!(context)
+                  : ScreenErrorMessage(
+                    errorMessage ?? context.localizations.generalErrorMsg,
+                  );
+          }
+        },
+      ),
+    );
   }
 }

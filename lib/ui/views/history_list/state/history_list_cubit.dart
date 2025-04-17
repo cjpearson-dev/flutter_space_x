@@ -19,7 +19,17 @@ final class HistoryListCubit extends Cubit<HistoryListState> {
     : super(HistoryListState(loadingStatus: DataLoadingStatus.initial));
 
   Future<void> load() async {
-    emit(state.copyWith(loadingStatus: DataLoadingStatus.loading));
+    // On first load set status to [loading], else [refreshing]:
+    // While loading, a full screen progress indicator will appear until content is fetched.
+    // While refreshing, content is preserved while data refreshes in the background. A refresh indicator will appear atop the existing content.
+    emit(
+      state.copyWith(
+        loadingStatus:
+            state.loadingStatus == DataLoadingStatus.initial
+                ? DataLoadingStatus.loading
+                : DataLoadingStatus.refreshing,
+      ),
+    );
 
     final response = await _historyRepository.getAllEvents();
 
