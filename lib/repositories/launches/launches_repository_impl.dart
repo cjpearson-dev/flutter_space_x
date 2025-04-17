@@ -32,10 +32,17 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
   }
 
   @override
-  Future<DataResponse<List<Launch>>> getPastLaunches() async {
+  Future<DataResponse<List<Launch>>> getPastLaunches({
+    int? limit,
+    int? offset,
+  }) async {
     final url = _constructUrl(
       'launches/past',
-      queryParameters: {'order': 'desc'},
+      queryParameters: {
+        'order': 'desc',
+        if (limit != null) 'limit': '$limit',
+        if (offset != null) 'offset': '$offset',
+      },
     );
     final response = await _apiService.get(url: url);
 

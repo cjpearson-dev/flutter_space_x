@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_x/injection/setup_locator.dart';
 import 'package:flutter_space_x/models/launch.dart';
@@ -18,6 +19,11 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
   LaunchesListCubit()
     : super(LaunchesListState(loadingStatus: DataLoadingStatus.initial));
 
+  // The amount of results to fetch at one time.
+  final limit = 10;
+
+  // This method will trigger once when the class is constructed by the BlocProvider,
+  // then subsequently when the user pulls down to refresh.
   Future<void> load() async {
     // On first load set status to [loading], else [refreshing]:
     // While loading, a full screen progress indicator will appear until content is fetched.
@@ -31,13 +37,18 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
       ),
     );
 
-    final response = await _historyRepository.getPastLaunches();
+    final response = await _historyRepository.getPastLaunches(
+      limit: limit,
+      offset: 0,
+    );
 
     if (response.isSuccessful) {
       emit(
         state.copyWith(
           loadingStatus: DataLoadingStatus.success,
           content: response.content,
+          outOfResults:
+              response.content != null && response.content!.length > limit,
         ),
       );
     } else {
@@ -45,9 +56,66 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
         state.copyWith(
           loadingStatus: DataLoadingStatus.failure,
           error: response.message,
+          outOfResults: false,
         ),
       );
     }
+  }
+
+  // This method will trigger when the user has scrolled toward the bottom of the page,
+  // fetching more results and appending them to state.
+  Future<void> loadMore() async {
+    emit(state.copyWith(isLoadingMore: true));
+    // Pass in the current content list length as the offset -
+    // this is a little naive if you've got data that is likely to update regularly but
+    // is sufficient for this demonstration.
+    final response = await _historyRepository.getPastLaunches(
+      limit: limit,
+      offset: state.content?.length,
+    );
+
+    if (response.isSuccessful) {
+      // Combine the latest fetched data with the existing
+      final Set<Launch> combinedLaunches = {
+        ...state.content ?? [],
+        ...response.content ?? [],
+      };
+
+      emit(
+        state.copyWith(
+          loadingStatus: DataLoadingStatus.success,
+          content: combinedLaunches.toList(),
+          outOfResults:
+              response.content != null && response.content!.length > limit,
+          isLoadingMore: false,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          loadingStatus: DataLoadingStatus.failure,
+          error: response.message,
+          outOfResults: false,
+          isLoadingMore: false,
+        ),
+      );
+    }
+  }
+
+  bool onScrollNotification(ScrollNotification scrollInfo) {
+    // Tweak this value as necessary to get as seamless a lazy loading scroll as possible.
+    final double triggerOffset = 300; // Trigger refresh when 300px from bottom
+
+    // This will trigger when the user approaches the bottom of the currently loaded list,
+    // as long as there are more results to fetch and background fetching isn't already happening.
+    if (!state.outOfResults &&
+        !state.isLoadingMore &&
+        scrollInfo.metrics.pixels >=
+            scrollInfo.metrics.maxScrollExtent - triggerOffset) {
+      loadMore();
+      return true;
+    }
+    return false;
   }
 
   // Future<void> navigateToEventDetails(int eventId) =>

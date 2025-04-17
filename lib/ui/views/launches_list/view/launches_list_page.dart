@@ -46,25 +46,28 @@ class LaunchesListPage extends StatelessWidget {
 
     if (launches.isNotEmpty) {
       /// Show list of launches if fetched and not empty.
-      return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 0.73,
-          crossAxisCount: 2,
-          crossAxisSpacing: 6.0,
-          mainAxisSpacing: 6.0,
-        ),
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-        itemCount: launches.length,
-        itemBuilder: (BuildContext context, int index) {
-          final launch = launches[index];
+      return NotificationListener(
+        onNotification: context.read<LaunchesListCubit>().onScrollNotification,
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            childAspectRatio: 0.73,
+            crossAxisCount: 2,
+            crossAxisSpacing: 6.0,
+            mainAxisSpacing: 6.0,
+          ),
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+          itemCount: launches.length,
+          itemBuilder: (BuildContext context, int index) {
+            final launch = launches[index];
 
-          return LaunchListItem(
-            title: launch.missionName,
-            year: launch.launchYear,
-            imageUrl: launch.links.flickrImages.firstOrNull,
-            wasSuccess: launch.launchSuccess,
-          );
-        },
+            return LaunchListItem(
+              title: launch.missionName,
+              year: launch.launchYear,
+              imageUrl: launch.links.flickrImages.firstOrNull,
+              wasSuccess: launch.launchSuccess,
+            );
+          },
+        ),
       );
     } else {
       /// Show message if data fetched successfully but no results present.
