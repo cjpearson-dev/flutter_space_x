@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../models/historical_event.dart';
 import '../../services/api/api.dart';
 import '../data_response.dart';
@@ -19,13 +21,19 @@ final class HistoryRepositoryImpl implements HistoryRepository {
 
     switch (response) {
       case ApiResponseSuccess(:final data):
-        final events = <HistoricalEvent>[];
+        try {
+          final events = <HistoricalEvent>[];
 
-        for (var jsonItem in data) {
-          events.add(HistoricalEvent.fromJson(jsonItem));
+          for (var jsonItem in data) {
+            events.add(HistoricalEvent.fromJson(jsonItem));
+          }
+
+          return DataResponse.success(events);
+        } on TypeError {
+          debugPrint('Json parsing error');
+          // TODO: Localise this string
+          return DataResponse.failure('Something went wrong');
         }
-
-        return DataResponse.success(events);
       case ApiResponseError(:final message):
         return DataResponse.failure(message);
     }
@@ -38,9 +46,15 @@ final class HistoryRepositoryImpl implements HistoryRepository {
 
     switch (response) {
       case ApiResponseSuccess(:final data):
-        final event = HistoricalEvent.fromJson(data);
+        try {
+          final event = HistoricalEvent.fromJson(data);
 
-        return DataResponse.success(event);
+          return DataResponse.success(event);
+        } on TypeError {
+          debugPrint('Json parsing error');
+          // TODO: Localise this string
+          return DataResponse.failure('Something went wrong');
+        }
       case ApiResponseError(:final message):
         return DataResponse.failure(message);
     }
