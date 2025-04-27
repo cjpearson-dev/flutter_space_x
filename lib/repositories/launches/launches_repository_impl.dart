@@ -1,6 +1,7 @@
 import '../../models/launch.dart';
 import '../../services/api/api.dart';
 import '../data_response.dart';
+import '../space_x_repository.dart';
 import 'launches_repository.dart';
 
 final class LaunchesRepositoryImpl implements LaunchesRepository {
@@ -8,13 +9,9 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
 
   LaunchesRepositoryImpl(this._apiService);
 
-  // Would have this in an .env file if it wasn't a publicly accessible API.
-  final _baseUrl = 'api.spacexdata.com';
-  final _basePath = '/v3';
-
   @override
   Future<DataResponse<List<Launch>>> getUpcomingLaunches() async {
-    final url = _constructUrl('launches/upcoming');
+    final url = SpaceXRepository.constructUrl('launches/upcoming');
     final response = await _apiService.get(url: url);
 
     switch (response) {
@@ -37,7 +34,7 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
     int? offset,
     int? year,
   }) async {
-    final url = _constructUrl(
+    final url = SpaceXRepository.constructUrl(
       'launches/past',
       queryParameters: {
         'order': 'desc',
@@ -64,7 +61,7 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
 
   @override
   Future<DataResponse<Launch>> getSingleLaunch(int flightNumber) async {
-    final url = _constructUrl('launches/$flightNumber');
+    final url = SpaceXRepository.constructUrl('launches/$flightNumber');
     final response = await _apiService.get(url: url);
 
     switch (response) {
@@ -76,7 +73,4 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
         return DataResponse.failure(message);
     }
   }
-
-  Uri _constructUrl(String path, {Map<String, String>? queryParameters}) =>
-      Uri.https(_baseUrl, '$_basePath/$path', queryParameters);
 }
