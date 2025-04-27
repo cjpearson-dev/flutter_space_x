@@ -4,6 +4,8 @@ import '../repositories/history/history_repository.dart';
 import '../repositories/history/history_repository_impl.dart';
 import '../repositories/launches/launches_repository.dart';
 import '../repositories/launches/launches_repository_impl.dart';
+import '../repositories/rockets/rocket_repository.dart';
+import '../repositories/rockets/rocket_repository_impl.dart';
 import '../services/api/api_service.dart';
 import '../services/api/api_service_http.dart';
 import '../services/navigation/navigation_service.dart';
@@ -29,5 +31,8 @@ Future<void> setupLocator() async {
   );
   locator.registerLazySingleton<LaunchesRepository>(
     () => LaunchesRepositoryImpl(locator<ApiService>()),
+  );
+  locator.registerLazySingleton<RocketRepository>(
+    () => RocketRepositoryImpl(locator<ApiService>()),
   );
 }

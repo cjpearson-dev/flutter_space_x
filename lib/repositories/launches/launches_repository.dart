@@ -9,6 +9,7 @@ abstract interface class LaunchesRepository {
     int? limit,
     int? offset,
     int? year,
+    String? rocketId,
   });
 
   Future<DataResponse<Launch>> getSingleLaunch(int flightNumber);

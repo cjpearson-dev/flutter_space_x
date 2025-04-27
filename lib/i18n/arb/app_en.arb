@@ -39,6 +39,10 @@
   "@yearSelectorLabel": {
     "description": "The label for the filter by year dropdown selector"
   },
+  "rocketSelectorLabel": "Rocket",
+  "@rocketSelectorLabel": {
+    "description": "The label for the filter by rocket dropdown selector"
+  },
   "searchButtonText": "Search",
   "@searchButtonText": {
     "description": "The text displayed on search buttons"

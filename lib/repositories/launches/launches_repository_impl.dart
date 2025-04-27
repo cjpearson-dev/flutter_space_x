@@ -33,6 +33,7 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
     int? limit,
     int? offset,
     int? year,
+    String? rocketId,
   }) async {
     final url = SpaceXRepository.constructUrl(
       'launches/past',
@@ -41,6 +42,7 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
         if (limit != null) 'limit': '$limit',
         if (offset != null) 'offset': '$offset',
         if (year != null) 'launch_year': '$year',
+        if (rocketId != null) 'rocket_id': rocketId,
       },
     );
     final response = await _apiService.get(url: url);

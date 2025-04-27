@@ -4,9 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
 import 'package:flutter_space_x/injection/setup_locator.dart';
 import 'package:flutter_space_x/services/navigation/navigation_service.dart';
+import 'package:flutter_space_x/ui/views/launches_filter/state/launches_filter_cubit.dart';
 import 'package:flutter_space_x/ui/views/launches_list/state/launches_list_cubit.dart';
 
-import '../widgets/launch_filter_menu.dart';
+import 'launches_filter/view/launch_filter_menu.dart';
 
 // Would ideally with more time replace these annotations with my own to decouple these views completely from auto_route.
 @RoutePage()
@@ -25,8 +26,14 @@ class DashboardPage extends StatelessWidget {
         context.localizations.historyListTitle,
       ];
 
-      return BlocProvider<LaunchesListCubit>(
-        create: (_) => LaunchesListCubit(),
+      return MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => LaunchesListCubit()),
+          BlocProvider(
+            create: (_) => LaunchesFilterCubit()..load(),
+            lazy: false,
+          ),
+        ],
         child: Scaffold(
           body: child,
           appBar: AppBar(

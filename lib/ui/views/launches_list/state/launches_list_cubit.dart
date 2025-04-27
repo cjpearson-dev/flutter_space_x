@@ -40,6 +40,7 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
       limit: limit,
       offset: 0,
       year: state.yearFilter,
+      rocketId: state.rocketIdFilter,
     );
 
     if (response.isSuccessful) {
@@ -73,6 +74,7 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
       limit: limit,
       offset: state.content?.length,
       year: state.yearFilter,
+      rocketId: state.rocketIdFilter,
     );
 
     if (response.isSuccessful) {
@@ -107,8 +109,12 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
     emit(state.copyWith(yearFilter: year));
   }
 
+  void onRocketSelected(String? rocketId) {
+    emit(state.copyWith(rocketIdFilter: rocketId));
+  }
+
   void resetFilters() {
-    emit(state.copyWith(yearFilter: null));
+    emit(state.copyWith(yearFilter: null, rocketIdFilter: null));
     load();
   }
 
