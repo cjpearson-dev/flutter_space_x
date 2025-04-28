@@ -23,7 +23,7 @@ class RocketDropdownSelector extends StatelessWidget {
       LaunchesFilterState,
       List<LaunchRocket>
     >(
-      selector: (state) => state.content!,
+      selector: (state) => state.rockets!,
       builder: (context, rockets) {
         return DropdownButtonFormField<String>(
           value: selectedRocketId,

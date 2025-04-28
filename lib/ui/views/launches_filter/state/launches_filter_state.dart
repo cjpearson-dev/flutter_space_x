@@ -4,7 +4,7 @@ part of 'launches_filter_cubit.dart';
 abstract class LaunchesFilterState with _$LaunchesFilterState {
   const factory LaunchesFilterState({
     required DataLoadingStatus loadingStatus,
-    List<LaunchRocket>? content,
+    List<LaunchRocket>? rockets,
     List<LaunchSiteDetail>? launchPads,
     String? error,
   }) = _LaunchesFilterState;

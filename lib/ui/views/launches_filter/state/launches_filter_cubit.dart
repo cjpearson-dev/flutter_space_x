@@ -31,7 +31,7 @@ final class LaunchesFilterCubit extends Cubit<LaunchesFilterState> {
       emit(
         state.copyWith(
           loadingStatus: DataLoadingStatus.success,
-          content: responses[0].content! as List<LaunchRocket>,
+          rockets: responses[0].content! as List<LaunchRocket>,
           launchPads: responses[1].content! as List<LaunchSiteDetail>,
         ),
       );
