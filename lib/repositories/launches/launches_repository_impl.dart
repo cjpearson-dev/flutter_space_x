@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_space_x/models/launch.dart';
+import 'package:flutter_space_x/services/api/api.dart';
 
-import '../../models/launch.dart';
-import '../../services/api/api.dart';
 import '../data_response.dart';
 import '../space_x_repository.dart';
 import 'launches_repository.dart';
@@ -52,14 +52,18 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
     final response = await _apiService.get(url: url);
 
     switch (response) {
-      case ApiResponseSuccess(:final data):
+      case ApiResponseSuccess(:final headers, :final data):
         final events = <Launch>[];
 
         for (var jsonItem in data) {
           events.add(Launch.fromJson(jsonItem));
         }
+        final count =
+            headers[SpaceXRepository.countHeaderKey] != null
+                ? int.tryParse(headers[SpaceXRepository.countHeaderKey]!)
+                : null;
 
-        return DataResponse.success(events);
+        return DataResponse.success(events, count);
       case ApiResponseError(:final message):
         return DataResponse.failure(message);
     }

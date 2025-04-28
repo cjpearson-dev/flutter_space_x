@@ -6,7 +6,7 @@ abstract class LaunchesListState with _$LaunchesListState {
     required DataLoadingStatus loadingStatus,
     List<Launch>? content,
     String? error,
-    @Default(false) bool outOfResults,
+    int? maxCount,
     @Default(false) bool isLoadingMore,
     int? yearFilter,
     String? rocketIdFilter,

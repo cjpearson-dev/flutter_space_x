@@ -33,7 +33,7 @@ final class ApiServiceHttp implements ApiService {
       switch (response.statusCode) {
         case 200:
           final body = json.decode(response.body);
-          return ApiResponse.success(body);
+          return ApiResponse.success(response.headers, body);
         case 401:
           return const ApiResponse.failure('Unauthorized');
         case 404:

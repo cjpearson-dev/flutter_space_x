@@ -49,8 +49,7 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
         state.copyWith(
           loadingStatus: DataLoadingStatus.success,
           content: response.content,
-          outOfResults:
-              response.content != null && response.content!.length > limit,
+          maxCount: response.maxCount,
         ),
       );
     } else {
@@ -58,7 +57,6 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
         state.copyWith(
           loadingStatus: DataLoadingStatus.failure,
           error: response.message,
-          outOfResults: false,
         ),
       );
     }
@@ -90,8 +88,6 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
         state.copyWith(
           loadingStatus: DataLoadingStatus.success,
           content: combinedLaunches.toList(),
-          outOfResults:
-              response.content != null && response.content!.length > limit,
           isLoadingMore: false,
         ),
       );
@@ -100,7 +96,6 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
         state.copyWith(
           loadingStatus: DataLoadingStatus.failure,
           error: response.message,
-          outOfResults: false,
           isLoadingMore: false,
         ),
       );
@@ -136,7 +131,10 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
 
     // This will trigger when the user approaches the bottom of the currently loaded list,
     // as long as there are more results to fetch and background fetching isn't already happening.
-    if (!state.outOfResults &&
+    final hasMore =
+        state.content != null && state.content!.length < (state.maxCount ?? 0);
+
+    if (hasMore &&
         !state.isLoadingMore &&
         scrollInfo.metrics.pixels >=
             scrollInfo.metrics.maxScrollExtent - triggerOffset) {
