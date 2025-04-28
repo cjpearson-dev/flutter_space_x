@@ -30,6 +30,7 @@ void main() {
         () async {
           // Arrange
           final mockResponse = ApiResponse.success(
+            <String, String>{},
             jsonDecode(mockHistoricalEventsJson),
           );
           provideDummy(mockResponse);
@@ -77,7 +78,10 @@ void main() {
         'return an error message when the response cannot be parsed into List<HistoricalEvent>',
         () async {
           // Arrange
-          final mockResponse = ApiResponse.success('invalid json');
+          final mockResponse = ApiResponse.success(
+            <String, String>{},
+            'invalid json',
+          );
           provideDummy(mockResponse);
           when(
             mockApiService.get(url: url),
@@ -101,6 +105,7 @@ void main() {
           final url = Uri.parse('$urlString/1');
           // Arrange
           final mockResponse = ApiResponse.success(
+            <String, String>{},
             jsonDecode(mockHistoricalEventJson),
           );
           provideDummy(mockResponse);
@@ -149,7 +154,10 @@ void main() {
         () async {
           final url = Uri.parse('$urlString/1');
           // Arrange
-          final mockResponse = ApiResponse.success('invalid json');
+          final mockResponse = ApiResponse.success(
+            <String, String>{},
+            'invalid json',
+          );
           provideDummy(mockResponse);
           when(
             mockApiService.get(url: url),
