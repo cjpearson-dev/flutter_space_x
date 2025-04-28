@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../../models/launch.dart';
 import '../../services/api/api.dart';
 import '../data_response.dart';
@@ -34,6 +36,7 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
     int? offset,
     int? year,
     String? rocketId,
+    String? siteId,
   }) async {
     final url = SpaceXRepository.constructUrl(
       'launches/past',
@@ -43,6 +46,7 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
         if (offset != null) 'offset': '$offset',
         if (year != null) 'launch_year': '$year',
         if (rocketId != null) 'rocket_id': rocketId,
+        if (siteId != null) 'site_id': siteId,
       },
     );
     final response = await _apiService.get(url: url);
@@ -71,6 +75,40 @@ final class LaunchesRepositoryImpl implements LaunchesRepository {
         final event = Launch.fromJson(data);
 
         return DataResponse.success(event);
+      case ApiResponseError(:final message):
+        return DataResponse.failure(message);
+    }
+  }
+
+  @override
+  Future<DataResponse<List<LaunchSiteDetail>>> getLaunchSites() async {
+    final url = SpaceXRepository.constructUrl(
+      'launchpads',
+      queryParameters: {
+        'filter': 'name,site_id,site_name_long,attempted_launches',
+      },
+    );
+    final response = await _apiService.get(url: url);
+
+    switch (response) {
+      case ApiResponseSuccess(:final data):
+        try {
+          final launchPads = <LaunchSiteDetail>[];
+
+          for (var jsonItem in data) {
+            launchPads.add(LaunchSiteDetail.fromJson(jsonItem));
+          }
+
+          // Filter out sites that have no launches.
+          final filteredLaunchPads =
+              launchPads.where((pad) => pad.attemptedLaunches > 0).toList();
+
+          return DataResponse.success(filteredLaunchPads);
+        } on TypeError {
+          debugPrint('Json parsing error');
+          // TODO: Localise this string
+          return DataResponse.failure('Something went wrong');
+        }
       case ApiResponseError(:final message):
         return DataResponse.failure(message);
     }

@@ -66,6 +66,19 @@ abstract class LaunchSite with _$LaunchSite {
 }
 
 @freezed
+abstract class LaunchSiteDetail with _$LaunchSiteDetail {
+  const factory LaunchSiteDetail({
+    required String siteId,
+    required String name,
+    required String siteNameLong,
+    @Default(0) int attemptedLaunches,
+  }) = _LaunchSiteDetail;
+
+  factory LaunchSiteDetail.fromJson(Map<String, dynamic> json) =>
+      _$LaunchSiteDetailFromJson(json);
+}
+
+@freezed
 abstract class LaunchLinks with _$LaunchLinks {
   const factory LaunchLinks({
     String? missionPatch,

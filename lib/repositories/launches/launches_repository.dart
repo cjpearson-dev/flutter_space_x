@@ -10,7 +10,10 @@ abstract interface class LaunchesRepository {
     int? offset,
     int? year,
     String? rocketId,
+    String? siteId,
   });
 
   Future<DataResponse<Launch>> getSingleLaunch(int flightNumber);
+
+  Future<DataResponse<List<LaunchSiteDetail>>> getLaunchSites();
 }

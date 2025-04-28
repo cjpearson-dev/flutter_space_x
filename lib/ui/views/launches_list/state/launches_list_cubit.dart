@@ -41,6 +41,7 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
       offset: 0,
       year: state.yearFilter,
       rocketId: state.rocketIdFilter,
+      siteId: state.launchSiteIdFilter,
     );
 
     if (response.isSuccessful) {
@@ -75,6 +76,7 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
       offset: state.content?.length,
       year: state.yearFilter,
       rocketId: state.rocketIdFilter,
+      siteId: state.launchSiteIdFilter,
     );
 
     if (response.isSuccessful) {
@@ -113,8 +115,18 @@ final class LaunchesListCubit extends Cubit<LaunchesListState> {
     emit(state.copyWith(rocketIdFilter: rocketId));
   }
 
+  void onLaunchSiteSelected(String? siteId) {
+    emit(state.copyWith(launchSiteIdFilter: siteId));
+  }
+
   void resetFilters() {
-    emit(state.copyWith(yearFilter: null, rocketIdFilter: null));
+    emit(
+      state.copyWith(
+        yearFilter: null,
+        rocketIdFilter: null,
+        launchSiteIdFilter: null,
+      ),
+    );
     load();
   }
 

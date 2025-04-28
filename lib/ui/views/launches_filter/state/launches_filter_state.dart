@@ -5,6 +5,7 @@ abstract class LaunchesFilterState with _$LaunchesFilterState {
   const factory LaunchesFilterState({
     required DataLoadingStatus loadingStatus,
     List<LaunchRocket>? content,
+    List<LaunchSiteDetail>? launchPads,
     String? error,
   }) = _LaunchesFilterState;
 }

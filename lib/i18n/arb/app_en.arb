@@ -43,6 +43,10 @@
   "@rocketSelectorLabel": {
     "description": "The label for the filter by rocket dropdown selector"
   },
+  "launchPadSelectorLabel": "Launch Site",
+  "@launchPadSelectorLabel": {
+    "description": "The label for the filter by launch site dropdown selector"
+  },
   "searchButtonText": "Search",
   "@searchButtonText": {
     "description": "The text displayed on search buttons"

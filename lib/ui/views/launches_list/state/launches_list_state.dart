@@ -10,5 +10,6 @@ abstract class LaunchesListState with _$LaunchesListState {
     @Default(false) bool isLoadingMore,
     int? yearFilter,
     String? rocketIdFilter,
+    String? launchSiteIdFilter,
   }) = _LaunchesListState;
 }

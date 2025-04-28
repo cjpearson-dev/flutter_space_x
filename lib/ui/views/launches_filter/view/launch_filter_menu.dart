@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
 import 'package:flutter_space_x/ui/views/launches_list/state/launches_list_cubit.dart';
+import 'package:flutter_space_x/ui/widgets/forms/launch_site_dropdown_selector.dart';
+import 'package:flutter_space_x/ui/widgets/forms/rocket_dropdown_selector.dart';
 import 'package:flutter_space_x/ui/widgets/forms/year_dropdown_selector.dart';
-
-import '../../../widgets/forms/rocket_dropdown_selector.dart';
 
 class LaunchFilterMenu extends StatelessWidget {
   const LaunchFilterMenu({super.key});
@@ -76,6 +76,24 @@ class LaunchFilterMenu extends StatelessWidget {
                               context
                                   .read<LaunchesListCubit>()
                                   .onRocketSelected(value);
+                            },
+                          );
+                        },
+                      ),
+                      SizedBox(height: 24.0),
+                      BlocSelector<
+                        LaunchesListCubit,
+                        LaunchesListState,
+                        String?
+                      >(
+                        selector: (state) => state.launchSiteIdFilter,
+                        builder: (context, selectedSiteId) {
+                          return LaunchSiteDropdownSelector(
+                            selectedLaunchSiteId: selectedSiteId,
+                            onChanged: (String? value) {
+                              context
+                                  .read<LaunchesListCubit>()
+                                  .onLaunchSiteSelected(value);
                             },
                           );
                         },
