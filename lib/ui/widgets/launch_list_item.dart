@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_space_x/ui/ui_helpers.dart';
 
 import 'app_network_image.dart';
 import 'launch_status_note.dart';
@@ -47,7 +48,7 @@ class LaunchListItem extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: kGuttersAllMd,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,

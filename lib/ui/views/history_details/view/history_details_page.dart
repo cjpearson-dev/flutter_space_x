@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
 import 'package:flutter_space_x/models/historical_event.dart';
 import 'package:flutter_space_x/repositories/data_loading_status.dart';
+import 'package:flutter_space_x/ui/ui_helpers.dart';
 import 'package:flutter_space_x/ui/widgets/widgets.dart';
 import 'package:flutter_space_x/utils/date_format.dart';
 
@@ -58,10 +59,10 @@ class HistoryDetailsPage extends StatelessWidget {
     return MinHeightScrollableBody(
       centreChild: false,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: kGuttersAllLg,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 8,
+          spacing: kSpaceSm,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

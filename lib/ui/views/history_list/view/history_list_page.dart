@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
 import 'package:flutter_space_x/repositories/data_loading_status.dart';
+import 'package:flutter_space_x/ui/ui_helpers.dart';
 import 'package:flutter_space_x/ui/widgets/widgets.dart';
 
 import '../state/history_list_cubit.dart';
@@ -47,11 +48,11 @@ class HistoryListPage extends StatelessWidget {
     if (events.isNotEmpty) {
       /// Show list of events if fetched and not empty.
       return ListView.builder(
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+        padding: const EdgeInsets.fromLTRB(kSpaceSm, kSpaceSm, kSpaceSm, 0),
         itemCount: events.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: kSpaceSm),
             child: EventListItem(
               title: events[index].title,
               text: events[index].details,

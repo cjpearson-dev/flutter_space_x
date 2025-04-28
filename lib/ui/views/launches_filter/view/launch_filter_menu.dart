@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
+import 'package:flutter_space_x/ui/ui_helpers.dart';
 import 'package:flutter_space_x/ui/views/launches_list/state/launches_list_cubit.dart';
 import 'package:flutter_space_x/ui/widgets/forms/launch_site_dropdown_selector.dart';
 import 'package:flutter_space_x/ui/widgets/forms/rocket_dropdown_selector.dart';
@@ -17,7 +18,7 @@ class LaunchFilterMenu extends StatelessWidget {
           children: [
             Container(
               constraints: BoxConstraints(minHeight: kToolbarHeight),
-              padding: EdgeInsets.fromLTRB(18.0, 0, 2.0, 0.0),
+              padding: EdgeInsets.fromLTRB(kSpaceLg, 0.0, kSpaceXs, 0.0),
               decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
@@ -45,9 +46,9 @@ class LaunchFilterMenu extends StatelessWidget {
             Expanded(
               child: Form(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  padding: kGuttersSideLg,
                   child: ListView(
-                    padding: const EdgeInsets.symmetric(vertical: 18.0),
+                    padding: kGuttersTopBottomLg,
                     children: [
                       BlocSelector<LaunchesListCubit, LaunchesListState, int?>(
                         selector: (state) => state.yearFilter,
@@ -62,7 +63,7 @@ class LaunchFilterMenu extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 24.0),
+                      kVerticalSpaceXl,
                       BlocSelector<
                         LaunchesListCubit,
                         LaunchesListState,
@@ -80,7 +81,7 @@ class LaunchFilterMenu extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 24.0),
+                      kVerticalSpaceXl,
                       BlocSelector<
                         LaunchesListCubit,
                         LaunchesListState,
@@ -105,7 +106,7 @@ class LaunchFilterMenu extends StatelessWidget {
             ),
             Container(
               constraints: BoxConstraints(minHeight: kToolbarHeight),
-              padding: EdgeInsets.all(18.0),
+              padding: kGuttersAllLg,
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
@@ -116,7 +117,7 @@ class LaunchFilterMenu extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 16.0,
+                spacing: kSpaceLg,
                 children: [
                   Expanded(
                     child: OutlinedButton(

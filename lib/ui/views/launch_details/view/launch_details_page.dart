@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
 import 'package:flutter_space_x/models/launch.dart';
 import 'package:flutter_space_x/repositories/data_loading_status.dart';
+import 'package:flutter_space_x/ui/ui_helpers.dart';
 import 'package:flutter_space_x/ui/widgets/widgets.dart';
 import 'package:flutter_space_x/utils/date_format.dart';
 
@@ -76,10 +77,10 @@ class LaunchDetailsPage extends StatelessWidget {
               ),
             ),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: kGuttersAllLg,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 8,
+              spacing: kSpaceSm,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -119,7 +120,7 @@ class LaunchDetailsPage extends StatelessWidget {
                 ),
                 if (launch.details != null)
                   Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
+                    padding: const EdgeInsets.only(top: kSpaceLg),
                     child: Text(
                       launch.details!,
                       style: TextTheme.of(context).bodyLarge,

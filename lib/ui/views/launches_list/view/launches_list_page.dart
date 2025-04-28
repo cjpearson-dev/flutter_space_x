@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_x/i18n/i18n.dart';
 import 'package:flutter_space_x/repositories/data_loading_status.dart';
+import 'package:flutter_space_x/ui/ui_helpers.dart';
 import 'package:flutter_space_x/ui/widgets/widgets.dart';
 
 import '../state/launches_list_cubit.dart';
@@ -61,10 +62,10 @@ class _LaunchesListPageState extends State<LaunchesListPage> {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: 0.73,
             crossAxisCount: 2,
-            crossAxisSpacing: 6.0,
-            mainAxisSpacing: 6.0,
+            crossAxisSpacing: kSpaceSm,
+            mainAxisSpacing: kSpaceSm,
           ),
-          padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+          padding: const EdgeInsets.fromLTRB(kSpaceSm, kSpaceSm, kSpaceSm, 0),
           itemCount: launches.length,
           itemBuilder: (BuildContext context, int index) {
             final launch = launches[index];
